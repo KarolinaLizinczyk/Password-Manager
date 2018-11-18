@@ -1,0 +1,24 @@
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager
+from flask_wtf.csrf import CSRFProtect
+
+app = Flask(__name__)
+
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_pyfile('config.py')
+
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
+
+
+CSRFProtect(app)
+
+
+from app import views, models, forms
