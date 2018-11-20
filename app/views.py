@@ -35,11 +35,11 @@ def edit(id):
 
     if request.method == 'POST':
         PasswordManager.query.filter_by(id=id).update(
-            dict(id=request.form['id'], site_name=request.form['site_name'], site_url=request.form['site_url'],
-                 login_name=request.form['login_name'], _password=request.form['password']))
+            dict(site_name=request.form['site_name'], site_url=request.form['site_url'],
+                 login_name=request.form['login_account_name'], password=request.form['password']))
         db.session.commit()
-        return render_template('edit.html', form=form, entry=entry)
-    return render_template('edit.html', form=form, entry=entry)
+        return render_template('edit.html', form=form, entry=entry, password=decoded_pass)
+    return render_template('edit.html', form=form, entry=entry, password=decoded_pass)
 
 
 @app.route('/delete/<id>', methods=['GET'])

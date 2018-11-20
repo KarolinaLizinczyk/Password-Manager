@@ -35,27 +35,19 @@
 <body>
     <h1>Password Manager App</h1>
     <div class="row">
-      <div class="col-sm-3 col-lg-offset-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <table class="table table-striped">
-                            <tr>
-                                <th>ID</th>
-                                <th>Site Name</th>
-                                <th>Site URL</th>
-                                <th>Login Name</th>
-                                <th>Password</th>
-                            </tr>
-                           
-                        </table>
-                    </div>
-                </div>
-            </div>
+      <div class="col-sm-2 col-lg-offset-1">
+          <h2>Details</h2>
+            <ul class="list-group">
+              <li class="list-group-item">Site Name: {{entry.site_name}}</li>
+              <li class="list-group-item">Site URL: {{entry.site_url}}</li>
+              <li class="list-group-item">Login Name: {{entry.login_account_name}}</li>
+              <li class="list-group-item">Password: {{password}}</li>
+            </ul>
       </div>
-      <div class="col-sm-3 col-lg-offset-4">
+      <div class="col-sm-3 col-lg-offset-1">
         <h2>Update site</h2>
-         <form method="post" action="/edit/{{ entry.id }}">
+         <form name="form" method="post" action="/edit/{{ entry.id }}">
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="row control-group">
                     <div class="form-group col-sm-12 floating-label-form-group controls">
                         <!--<label>Email Address</label>-->

@@ -8,3 +8,8 @@ class PasswordManagerForm(FlaskForm):
     login_name = StringField('Login Name', [validators.input_required(), validators.email(), validators.Length(min=6, max=35)])
     password = PasswordField('Password', [validators.input_required()])
 
+
+class UserForm(FlaskForm):
+    user_name = StringField('Login Name', [validators.input_required(), validators.Length(min=4, max=25)])
+    password = StringField('Password', [validators.input_required()])
+    
