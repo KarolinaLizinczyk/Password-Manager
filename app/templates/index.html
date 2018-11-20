@@ -21,10 +21,11 @@
 
 <body>
     <h1>Password Manager App</h1>
+    <br>
     <div class="row">
-      <div class="col-sm-4">
-        <h2>Enter your site</h2>
-        <form name="form" class="form-horizontal" action="/" method="post">
+      <div class="col-sm-3 col-sm-offset-2">
+        <h2>Add your site</h2>
+        <form name="form" class="form-horizontal" action="/" method="post" id="AddForm">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <div class="form-group">
         <label class="control-label col-sm-2" for="site_name">Site Name</label>
@@ -57,29 +58,25 @@
       </div>
     </form>
     </div>
-    <div class="col-sm-8">
-        <div class="col-sm-6 col-sm-offset-2">
+    <div class="col-sm-6">
+        <div class="col-sm-3 col-sm-offset-2">
 				<h2> List Of All Entries</h2>
 				<div class="row control-group">
 					<table class="table table-striped">
                         <tr>
                             <th>ID</th>
                             <th class="col-md-3">Site Name</th>
-                            <th class="col-md-3">Site URL</th>
-                            <th class="col-md-3">Login Name</th>
-                            <th class="col-md-2">Password</th>
+                            <th>Update/Delete</th>
                             <th></th>
                         </tr>
                         {% for entry in all_entries %}
                         <tr>
                             <td>{{entry.id}}</td>
                             <td>{{entry.site_name}}</td>
-                            <td>{{entry.site_url}}</td>
-                            <td>{{entry.login_account_name}}</td>
-                            <td>{{entry.password}}</td>
                             <td>
                                 <div id="success">
                                     <form> <!-- https://stackoverflow.com/questions/24088814/html5-button-formaction-attribute-not-working-outside-of-form - this could be done without the "form" tag who is here present only so that the formaction/method works -->
+
                                         <button type="submit" formmethod="get" formaction="/edit/{{ entry.id }}" class="btn btn-success">Update</button>
                                         <button type="submit" formmethod="get" formaction="/delete/{{ entry.id }}" class="btn btn-danger">Delete</button>
                                     </form>
@@ -91,6 +88,7 @@
                 </div>
 
             </div>
+    </div>
     </div>
 </body>
 </html>

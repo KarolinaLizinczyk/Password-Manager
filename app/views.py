@@ -1,6 +1,6 @@
 from app import app, db
 from flask import request, render_template
-
+import base64
 from .models import PasswordManager
 from .forms import PasswordManagerForm
 
@@ -11,7 +11,7 @@ def index():
     form = PasswordManagerForm(request.form)
     if request.method == 'POST':
         entry = PasswordManager(request.form['site_name'], request.form['site_url'], request.form['login_name'], request.form['password'])
-        print(entry)
+
         db.session.add(entry)
         db.session.commit()
 
@@ -26,20 +26,21 @@ def index():
 def edit(id):
     entry = PasswordManager.query.filter_by(id=id).first()
     form = PasswordManagerForm()
-    print(form)
 
     form.site_name.data = entry.site_name
     form.site_url.data = entry.site_url
     form.login_name.data = entry.login_account_name
-    form.password.data = entry.password
+    decoded_pass = base64.b64decode(entry.password)
+    form.password.data = decoded_pass
 
     if request.method == 'POST':
         PasswordManager.query.filter_by(id=id).update(
             dict(id=request.form['id'], site_name=request.form['site_name'], site_url=request.form['site_url'],
-                 login_name=request.form['login_name'], password=request.form['password']))
+                 login_name=request.form['login_name'], _password=request.form['password']))
         db.session.commit()
         return render_template('edit.html', form=form, entry=entry)
     return render_template('edit.html', form=form, entry=entry)
+
 
 @app.route('/delete/<id>', methods=['GET'])
 def delete(id):
