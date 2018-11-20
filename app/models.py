@@ -1,5 +1,5 @@
 import base64
-from sqlalchemy.ext.hybrid import hybrid_method,hybrid_property
+from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from app import db, bcrypt
 
 
