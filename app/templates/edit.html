@@ -6,7 +6,7 @@
           <h2>Details</h2>
             <ul class="list-group">
               <span class="label label-info">Site Name:</span><li class="list-group-item"> {{entry.site_name}}</li><br>
-              <span class="label label-info">Site URL:</span><li class="list-group-item"> {{entry.site_url}}</li><br>
+              <span class="label label-info">Site URL:</span><a href="{{entry.site_url}}" target="_blank" class="list-group-item list-group-item-action"> {{entry.site_url}}</a><br>
               <span class="label label-info">Login Name:</span><li class="list-group-item"> {{entry.login_account_name}}</li><br>
               <span class="label label-info">Password:</span><li class="list-group-item"> {{password}}</li><br>
             </ul>
@@ -16,7 +16,7 @@
          <form name="form" method="post" action="/edit/{{ entry.id }}">
              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="row control-group">
-                    {% from "_formhelpers.html" import render_field %}
+                    {% from "includes/_formhelpers.html" import render_field %}
                     <div class="form-group col-sm-12 floating-label-form-group controls">
                         <!--<label>Email Address</label>-->
                         {{ render_field(form.site_name, class="form-control")}}

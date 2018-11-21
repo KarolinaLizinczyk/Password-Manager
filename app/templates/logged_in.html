@@ -38,20 +38,22 @@
         </form>
         </div>
         <div class="col-sm-6">
-        <div class="col-sm-3 col-sm-offset-2">
+        <div class="col-sm-5 col-sm-offset-2">
             <h2> List Of All Entries</h2>
                 <div class="row control-group">
                     <table class="table table-striped">
                         <tr>
                             <th>ID</th>
-                            <th class="col-md-3">Site Name</th>
+                            <th class="col-md-2">Site Name</th>
+                            <th>Site Url</th>
                             <th>Update/Delete</th>
-                            <th></th>
+
                         </tr>
                         {% for entry in all_entries %}
                         <tr>
                             <td>{{entry.id}}</td>
                             <td>{{entry.site_name}}</td>
+                            <td>{{entry.site_url}}</td>
                             <td>
                                 <div id="success">
                                     <form> <!-- https://stackoverflow.com/questions/24088814/html5-button-formaction-attribute-not-working-outside-of-form - this could be done without the "form" tag who is here present only so that the formaction/method works -->
