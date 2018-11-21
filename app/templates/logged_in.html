@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Password Manager</title>
+
+    <!-- Custom CSS -->
+    <link href="static/css/styles.css" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <h1>Password Manager App</h1>
+    <br>
+    <div class="row">
+      <div class="col-sm-3 col-sm-offset-2">
+        <h2>Add your site</h2>
+        <form name="form" class="form-horizontal" action="/logged_in" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="site_name">Site Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="site_name" id="site_name" placeholder="Site Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="site_url">Site URL</label>
+        <div class="col-sm-10">
+          <input type="url" class="form-control" name="site_url" id="site_url" placeholder="Site URL">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="login_name">Login Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="login_name" id="login_name" placeholder="Login Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="pwd">Password</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" name="password" id="pwd" placeholder="Password">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+      </div>
+    </form>
+    </div>
+    <div class="col-sm-6">
+        <div class="col-sm-3 col-sm-offset-2">
+				<h2> List Of All Entries</h2>
+				<div class="row control-group">
+					<table class="table table-striped">
+                        <tr>
+                            <th>ID</th>
+                            <th class="col-md-3">Site Name</th>
+                            <th>Update/Delete</th>
+                            <th></th>
+                        </tr>
+                        {% for entry in all_entries %}
+                        <tr>
+                            <td>{{entry.id}}</td>
+                            <td>{{entry.site_name}}</td>
+                            <td>
+                                <div id="success">
+                                    <form> <!-- https://stackoverflow.com/questions/24088814/html5-button-formaction-attribute-not-working-outside-of-form - this could be done without the "form" tag who is here present only so that the formaction/method works -->
+
+                                        <button type="submit" formmethod="get" formaction="/edit/{{ entry.id }}" class="btn btn-success">Update</button>
+                                        <button type="submit" formmethod="get" formaction="/delete/{{ entry.id }}" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+            </div>
+    </div>
+    </div>
+</body>
+</html>
