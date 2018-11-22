@@ -1,0 +1,15 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+    <div class="row">
+      <div class="col-sm-2 col-lg-offset-5">
+          <h2>Details</h2>
+            <ul class="list-group">
+              <span class="label label-info">Site Name:</span><li class="list-group-item"> {{entry.site_name}}</li><br>
+              <span class="label label-info">Site URL:</span><a href="{{entry.site_url}}" target="_blank" class="list-group-item list-group-item-action"> {{entry.site_url}}</a><br>
+              <span class="label label-info">Login Name:</span><li class="list-group-item"> {{entry.login_account_name}}</li><br>
+              <span class="label label-info">Password:</span><li class="list-group-item"> {{password}}</li><br>
+            </ul>
+      </div>
+    </div>
+{% endblock %}

@@ -4,6 +4,8 @@ from flask_login import login_user, login_required
 from app import app, db, login_manager
 from .models import PasswordManager, User
 from .forms import PasswordManagerForm, UserForm
+import jwt
+import datetime
 
 
 # loginManager
@@ -69,5 +71,26 @@ def delete(id):
         return render_template('logged_in.html', all_entries=all_entries)
     return render_template('logged_in.html')
 
+@app.route('/issuetoken/<id>', methods=['GET'])
+@login_required
+def issuetoken(id):
+    payload = {
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=5),
+        'resource': id
+    }
+    token = jwt.encode(payload, app.config['TOKEN_SECRET'], algorithm='HS256')
+    tokenized_url = request.host_url + 'tokenized/' + token
+    return tokenized_url
 
-
+@app.route('/tokenized/<token>', methods=['GET'])
+def tokenized(token):
+    try:
+        decoded = jwt.decode(token, app.config['TOKEN_SECRET'], algorithm='HS256')
+    except jwt.ExpiredSignatureError:
+        return 'Your token has expired'
+    entryid = decoded['resource']
+    entry = PasswordManager.query.filter_by(id=entryid).first()
+    decoded_pass = base64.b64decode(entry.password)
+    print(entry)
+    print type(entry)
+    return render_template('entry.html', entry=entry, password=decoded_pass)

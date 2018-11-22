@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="login_name">Login Name</label>
+            <label class="control-label col-sm-2" for="login_name">Login</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" name="login_name" id="login_name" placeholder="Login Name">
             </div>
@@ -46,8 +46,7 @@
                             <th>ID</th>
                             <th class="col-md-2">Site Name</th>
                             <th>Site Url</th>
-                            <th>Update/Delete</th>
-
+                            <th>Options</th>
                         </tr>
                         {% for entry in all_entries %}
                         <tr>
@@ -55,12 +54,11 @@
                             <td>{{entry.site_name}}</td>
                             <td>{{entry.site_url}}</td>
                             <td>
-                                <div id="success">
                                     <form> <!-- https://stackoverflow.com/questions/24088814/html5-button-formaction-attribute-not-working-outside-of-form - this could be done without the "form" tag who is here present only so that the formaction/method works -->
                                         <button type="submit" formmethod="get" formaction="/edit/{{ entry.id }}" class="btn btn-success">Update</button>
                                         <button type="submit" formmethod="get" formaction="/delete/{{ entry.id }}" class="btn btn-danger">Delete</button>
+                                        <button type="submit" formmethod="get" formaction="/issuetoken/{{ entry.id }}" class="btn btn-warning">Link</button>
                                     </form>
-                                </div>
                             </td>
                         </tr>
                         {% endfor %}
