@@ -41,7 +41,7 @@ def logged_in():
         db.session.add(entry)
         db.session.commit()
     all_entries = [u.__dict__ for u in PasswordManager.query.all()]
-    if all_entries > 0:
+    if all_entries:
         return render_template('logged_in.html', form=form, all_entries=all_entries)
     return render_template('logged_in.html', form=form)
 
@@ -51,7 +51,7 @@ def logged_in():
 def edit(id):
     entry = PasswordManager.query.filter_by(id=id).first()
     form = PasswordManagerForm()
-    decoded_pass = base64.b64decode(entry.password)
+    decoded_pass = base64.b64decode(entry.password + '='*(-len(entry.password) % 4))
     if request.method == 'POST':
         PasswordManager.query.filter_by(id=id).update(
             dict(site_name=request.form['site_name'], site_url=request.form['site_url'],
@@ -90,7 +90,5 @@ def tokenized(token):
         return 'Your token has expired'
     entryid = decoded['resource']
     entry = PasswordManager.query.filter_by(id=entryid).first()
-    decoded_pass = base64.b64decode(entry.password)
-    print(entry)
-    print type(entry)
+    decoded_pass = base64.b64decode(entry.password + '='*(-len(entry.password) % 4))
     return render_template('entry.html', entry=entry, password=decoded_pass)

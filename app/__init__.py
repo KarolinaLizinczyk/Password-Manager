@@ -19,7 +19,7 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 bcrypt = Bcrypt(app)
-CSRFProtect(app)
-
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 
 from app import views, models, forms
